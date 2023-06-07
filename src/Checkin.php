@@ -125,7 +125,7 @@ if (!$CheckoutOrDelete &&  $EventID > 0) {
         <input type="hidden" id="adult-id" name="adult-id">
 
         <div class="row">
-            <div class="col-xs-12">
+            <div class="col-sm-12 col-md-10">
                 <div class="card card-primary">
                     <div class="card-header">
                         <h3 class="card-title"><?= gettext('Add Attendees for Event'); ?>: <?= $event->getTitle() ?></h3>
@@ -133,7 +133,7 @@ if (!$CheckoutOrDelete &&  $EventID > 0) {
                     <div class="card-body">
 
                         <div class="form-group">
-                            <label for="child" class="col-sm-2 control-label"><?= gettext("Person's Name") ?></label>
+                            <label for="child" class="col-sm-6 control-label"><?= gettext("Person's Name") ?></label>
                             <div class="col-sm-5 inputGroupContainer">
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="fa fa-child"></i></span>
@@ -148,7 +148,7 @@ if (!$CheckoutOrDelete &&  $EventID > 0) {
                         <hr>
                         <div class="form-group">
                             <label for="adult"
-                                   class="col-sm-2 control-label"><?= gettext('Adult Name(Optional)') ?></label>
+                                   class="col-sm-6 control-label"><?= gettext('Adult Name(Optional)') ?></label>
                             <div class="col-sm-5 inputGroupContainer">
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="fa fa-user"></i></span>
@@ -341,10 +341,12 @@ if (isset($_POST['EventID'])) {
 
         //Get Person who checked person out
         $sCheckoutby = "";
+        $sCheckoutDate = "";
         if ($per->getCheckoutId()) {
             $checkedOutBy = PersonQuery::create()
                             ->findOneById($per->getCheckoutId());
             $sCheckoutby = $checkedOutBy->getFullName();
+            $sCheckoutDate = date_format($per->getCheckoutDate(), SystemConfig::getValue('sDateTimeFormat'));
         } ?>
                     <tr>
                         <td><img src="<?= SystemURLs::getRootPath() . '/api/person/' . $per->getPersonId() . '/thumbnail' ?>"
@@ -352,7 +354,7 @@ if (isset($_POST['EventID'])) {
                             <a href="PersonView.php?PersonID=<?= $per->getPersonId() ?>"><?= $sPerson ?></a></td>
                         <td><?= date_format($per->getCheckinDate(), SystemConfig::getValue('sDateTimeFormat')) ?></td>
                         <td><?= $sCheckinby ?></td>
-                        <td><?= date_format($per->getCheckoutDate(), SystemConfig::getValue('sDateTimeFormat')) ?></td>
+                        <td><?= $sCheckoutDate ?></td>
                         <td><?= $sCheckoutby ?></td>
 
                         <td align="center">
